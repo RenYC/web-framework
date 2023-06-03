@@ -35,8 +35,11 @@ import PanelAccount from './panel-account.vue'
 const currentTab = ref('account')
 const isKeep = ref(false)
 
+const accountRef = ref<InstanceType<typeof PanelAccount>>()
+
 function loginAction() {
   console.log('立即登录')
+  accountRef.value?.loginAction(isKeep.value)
 }
 </script>
 
