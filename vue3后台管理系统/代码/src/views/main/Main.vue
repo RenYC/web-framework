@@ -1,19 +1,19 @@
 <template>
   <div class="main">
-    <h2>main: {{ counterStore.counter }}-{{ counterStore.doubleCounter }}</h2>
-    <button @click="changeCounter">修改counter</button>
+    <el-container class="main-content">
+      <el-aside :width="'210px'"> aside </el-aside>
+      <el-container>
+        <el-header height="48px"> header </el-header>
+        <el-main>
+          <router-view />
+        </el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script setup lang="ts">
 import useLoginStore from '@/store/login/login'
-import useCounterStore from '@/store/counter'
-
-const counterStore = useCounterStore()
-
-function changeCounter() {
-  counterStore.changeCounterAction(999)
-}
 
 const loginStore = useLoginStore()
 loginStore.loadLocalDataAction()
@@ -21,6 +21,31 @@ loginStore.loadLocalDataAction()
 
 <style lang="less" scoped>
 .main {
-  color: red;
+  width: 100%;
+  height: 100%;
+}
+
+.main-content {
+  height: 100%;
+
+  .el-aside {
+    overflow-x: hidden;
+    overflow-y: auto;
+    line-height: 200px;
+    text-align: left;
+    cursor: pointer;
+    background-color: #001529;
+    transition: width 0.3s linear;
+    scrollbar-width: none; /* firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .el-main {
+    background-color: #f0f2f5;
+  }
 }
 </style>
