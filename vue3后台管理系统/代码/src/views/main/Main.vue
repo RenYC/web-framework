@@ -1,7 +1,9 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside :width="'210px'"> aside </el-aside>
+      <el-aside :width="'210px'">
+        <nav-menu />
+      </el-aside>
       <el-container>
         <el-header height="48px"> header </el-header>
         <el-main>
@@ -13,6 +15,7 @@
 </template>
 
 <script setup lang="ts">
+import NavMenu from '@/components/nav-menu/nav-menu.vue'
 import useLoginStore from '@/store/login/login'
 
 const loginStore = useLoginStore()
