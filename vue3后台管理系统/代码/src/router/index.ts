@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { localCache } from '@/utils/cache'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -24,5 +25,14 @@ const router = createRouter({
 })
 
 // 导航守卫
+router.beforeEach((to) => {
+  const token = localCache.getCache('token')
+  if (to.path.startsWith('/main') && !token) {
+    return '/login'
+  }
+  if (to.path === '/login' && token) {
+    return '/main'
+  }
+})
 
 export default router
