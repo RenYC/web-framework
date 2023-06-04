@@ -1,4 +1,4 @@
-import router from '@/router'
+import router, { addRoutesWithMenu } from '@/router'
 import { defineStore } from 'pinia'
 import { localCache } from '@/utils/cache'
 import { accountLogin, getRoleMenus, getUserById } from '@/service/login/login'
@@ -103,11 +103,18 @@ const useLoginStore = defineStore('login', {
       this.userMenus = menuRes
       localCache.setCache('userMenus', this.userMenus)
 
+      // 5.动态添加路由
+      addRoutesWithMenu(this.userMenus)
+
       // 跳转到首页
       router.push('/main')
     },
     loadLocalDataAction() {
       this.token = localCache.getCache('token')
+      this.userInfo = localCache.getCache('userInfo')
+      this.userMenus = localCache.getCache('userMenus')
+
+      addRoutesWithMenu(this.userMenus)
     }
   }
 })
