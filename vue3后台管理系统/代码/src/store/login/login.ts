@@ -59,6 +59,50 @@ const useLoginStore = defineStore('login', {
       this.userInfo = userRes
       localCache.setCache('useInfo', this.userInfo)
 
+      // 4.根据role的id获取菜单
+      const roleId = this.userInfo.role.id
+      // const menuRes = await getRoleMenus(roleId)
+      const menuRes = [
+        {
+          id: 38,
+          name: '系统总览',
+          type: 1,
+          url: '/main/analysis',
+          icon: 'el-icon-monitor',
+          sort: 1,
+          children: [
+            {
+              id: 39,
+              url: '/main/analysis/overview',
+              name: '核心技术',
+              sort: 106,
+              type: 2,
+              children: null,
+              parentId: 38
+            },
+            {
+              id: 40,
+              url: '/main/analysis/dashboard',
+              name: '商品统计',
+              sort: 107,
+              type: 2,
+              children: null,
+              parentId: 38
+            }
+          ]
+        },
+        {
+          id: 1,
+          name: '系统管理',
+          type: 1,
+          url: '/main/system',
+          icon: 'el-icon-setting',
+          sort: 2
+        }
+      ]
+      this.userMenus = menuRes
+      localCache.setCache('userMenus', this.userMenus)
+
       // 跳转到首页
       router.push('/main')
     },
