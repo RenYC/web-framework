@@ -17,11 +17,12 @@ import { reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import type { FormRules, FormInstance } from 'element-plus'
 import useLoginStore from '@/store/login/login'
+import { localCache } from '@/utils/cache'
 
 // 定义内部的数据
 const account = reactive({
-  name: '',
-  password: ''
+  name: localCache.getCache('name') ?? '',
+  password: localCache.getCache('password') ?? ''
 })
 
 // 定义form的验证规则
@@ -50,6 +51,15 @@ function loginAction(isKeep: boolean) {
 
       // 1.登录操作
       loginStore.accountLoginAction({ name, password })
+
+      // 2.记住密码
+      if (isKeep) {
+        localCache.setCache('name', name)
+        localCache.setCache('password', password)
+      } else {
+        localCache.deleteCache('name')
+        localCache.deleteCache('password')
+      }
     } else {
       ElMessage.warning({ message: '账号或者密码输入的规则错误~' })
     }

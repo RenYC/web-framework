@@ -31,11 +31,16 @@
 import { ref, watch } from 'vue'
 import PanelPhone from './panel-phone.vue'
 import PanelAccount from './panel-account.vue'
+import { localCache } from '@/utils/cache'
 
 const currentTab = ref('account')
-const isKeep = ref(false)
+const isKeep = ref<boolean>(localCache.getCache('rem_pwd'))
 
 const accountRef = ref<InstanceType<typeof PanelAccount>>()
+
+watch(isKeep, (newValue) => {
+  localCache.setCache('rem_pwd', newValue)
+})
 
 function loginAction() {
   console.log('立即登录')
