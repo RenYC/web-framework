@@ -61,7 +61,7 @@ export function mapPathToBreadcrumbs(menus: any[], path: string) {
   const breadcrumbs: any[] = []
   // 1.两层遍历
   for (const menu of menus) {
-    for (const submenu of menu.children) {
+    for (const submenu of menu.children || []) {
       if (path === submenu.url) {
         breadcrumbs.push({ name: menu.name, path: menu.url })
         breadcrumbs.push({ name: submenu.name, path: submenu.url })
